@@ -1,0 +1,3550 @@
+{
+	"info": {
+		"_postman_id": "2e1d84c4-047c-4c14-b658-7d11b5aa73c8",
+		"name": "freecia Api's",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32937146",
+		"_collection_link": "https://winter-firefly-159391.postman.co/workspace/Team-Workspace~c5602e1c-aa13-43f2-86e5-186510a7a634/collection/32937146-2e1d84c4-047c-4c14-b658-7d11b5aa73c8?action=share&source=collection_link&creator=32937146"
+	},
+	"item": [
+		{
+			"name": "register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has the required fields - ResponseHeader, ResponseCode, and ResponseMessage\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.have.property('ResponseHeader');\r",
+							"  pm.expect(responseData.ResponseHeader).to.have.property('ResponseCode');\r",
+							"  pm.expect(responseData.ResponseHeader).to.have.property('ResponseMessage');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Responseheader contains valid values\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.ResponseHeader).to.exist.and.to.be.an('object');\r",
+							"    pm.expect(responseData.ResponseHeader.ResponseCode).to.be.a('number');\r",
+							"    pm.expect(responseData.ResponseHeader.ResponseMessage).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type is application/json\", function () {\r",
+							"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify that ResponseCode is a non-negative integer\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData.ResponseHeader.ResponseCode).to.be.a('number').and.to.be.at.least(0);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "fullName",
+							"value": "Hamid",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "hamid@gmai.com",
+							"type": "text"
+						},
+						{
+							"key": "mobileNumber",
+							"value": "03471234567",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}register",
+					"host": [
+						"{{freecia}}register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Email is in a valid format\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData.data.email).to.be.a('string').and.to.match(/^.+@.+\\..+$/);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate ResponseHeader object presence and fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.ResponseHeader).to.exist.and.to.be.an('object');\r",
+							"    pm.expect(responseData.ResponseHeader.ResponseCode).to.exist;\r",
+							"    pm.expect(responseData.ResponseHeader.ResponseMessage).to.exist;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "hamid003@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}login",
+					"host": [
+						"{{freecia}}login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "send verfication otp",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.have.property('data').that.is.an('object');\r",
+							"    pm.expect(responseData.data).to.include.all.keys('id', 'name', 'email', 'created_at', 'contact_no_1', 'role', 'pusher_device_id', 'token', 'is_retailer', 'is_blocked', 'is_active');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Email is in a valid format\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData.data.email).to.be.a('string').and.to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Token is a non-empty string\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"\r",
+							"  pm.expect(responseData.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify the presence of ResponseHeader object and expected keys\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.ResponseHeader).to.exist.and.to.be.an('object');\r",
+							"    pm.expect(responseData.ResponseHeader).to.have.property('ResponseCode');\r",
+							"    pm.expect(responseData.ResponseHeader).to.have.property('ResponseMessage');\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "hamid003@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}login",
+					"host": [
+						"{{freecia}}login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user activate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Email is in a valid format\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.data.email).to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"ResponseHeader object is present and contains expected ResponseCode and ResponseMessage\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.ResponseHeader).to.exist.and.to.be.an('object');\r",
+							"    pm.expect(responseData.ResponseHeader.ResponseCode).to.exist;\r",
+							"    pm.expect(responseData.ResponseHeader.ResponseMessage).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify the 'created_at' field is in a valid date format\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.data).to.be.an('object');\r",
+							"    pm.expect(responseData.data.created_at).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$/, \"Invalid date format\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "hamid003@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}login",
+					"host": [
+						"{{freecia}}login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImI3OGQ4ZmY1OTExYmUzMDg5ZWRiMTFjZTE2YWI3Y2YxNmJiZmU1ZGNiODcxZGI1OWIzMTBhM2MyYjllOTlkZDUxMjI3YjZkMmNjZjM3MjhkIn0.eyJhdWQiOiI3IiwianRpIjoiYjc4ZDhmZjU5MTFiZTMwODllZGIxMWNlMTZhYjdjZjE2YmJmZTVkY2I4NzFkYjU5YjMxMGEzYzJiOWU5OWRkNTEyMjdiNmQyY2NmMzcyOGQiLCJpYXQiOjE2NTM5MDE3MTksIm5iZiI6MTY1MzkwMTcxOSwiZXhwIjoxNjg1NDM3NzE5LCJzdWIiOiI4Mzg2Iiwic2NvcGVzIjpbXX0.L9Av3qhKkpTucUNui4cXC_eWizmy0QGo9Ni7jPT0Ux-VMSdoAnvqLP4N5E_pJiDlq4lgSPoLN12rLrzWd1qjfFOOa0BQZVa7vkewwZGMrIO11SFh1f3q_t7vxYs4rndqhUr3wU8_dNAj0H7n_npk24ix9ZCuGIyaKleiAAf_Er4FYl3D5bErpRzV9fgY-WimfZtS6SHQj72kBys3l-FpLZO4oFQb8ZVwolBal60-zzIS8XKjP34eh0w-2eAewy7Cbg3qq2Z-qJiJj34xRDJUdDlrkEVrOOeI3Nr_0APUdv3vbN3syaTRH_1x0P1XnCOb2LKw0SaX93irvPsAPfIISC1enncXd_r7N3jKhCaOdkV9EeCZMbvVudz_lE5x1LyOtR7y65NUFBrKJIqCU7pDpzZrhwAuxSimXHF7lcpYiGGlCtdoTIlQYAHzfha0wvx7OmB6dcbSQF8mYRrQv1OnxvuTfWipws1gqpAGu-sLq_EkAS2IULKbbN2lHr-5i6-rlO6zIYWXecaASV0-MuVsJNsxGEyjcy4GuORKeaHLLYhosmjQPlh_eUhapOT54GmBbp1Cs8Y9AWjF8FWFdaGD9ZDKtgCTMmfw-RUf6gQVjcPnzlHMTC5VfZzJP_knZndWlST3Ml3aKNdwZNAP547wyETuL24RR6bDPHH7zvIWupM",
+						"type": "text"
+					},
+					{
+						"key": "Access-Control-Request-Headers",
+						"value": "application/xhtml+xml",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{freecia}}logout",
+					"host": [
+						"{{freecia}}logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "forgot password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 500\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(500);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.have.property('message');\r",
+							"    pm.expect(responseData).to.have.property('exception');\r",
+							"    pm.expect(responseData).to.have.property('file');\r",
+							"    pm.expect(responseData).to.have.property('line');\r",
+							"    pm.expect(responseData).to.have.property('trace');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message is a non-empty string\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"File and line are non-negative integers\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.file).to.be.a('number').and.to.be.at.least(0);\r",
+							"    pm.expect(responseData.line).to.be.a('number').and.to.be.at.least(0);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Trace array is present and has expected number of elements\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.be.an('object');\r",
+							"  pm.expect(responseData.trace).to.be.an('array').and.to.have.lengthOf.at.least(1, \"Trace array should not be empty\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "rehanhanifbz@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}forgot/password",
+					"host": [
+						"{{freecia}}forgot"
+					],
+					"path": [
+						"password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reset password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.have.property('ResponseHeader');\r",
+							"    pm.expect(responseData).to.have.property('data');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"ResponseCode is a valid integer\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData.ResponseHeader.ResponseCode).to.be.a('number');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"ResponseMessage is a non-empty string\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.ResponseHeader.ResponseMessage).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "rehanhanifbz@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						},
+						{
+							"key": "code",
+							"value": "441778",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}reset",
+					"host": [
+						"{{freecia}}reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 401\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(401);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message is a non-empty string\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message field contains a specific error code or message\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.message).to.exist.and.to.be.a('string');\r",
+							"    // Add specific validation for the error code or message here\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjdmM2I3MWRhNjNhYjQ2NWZkOGQ1YmI1MTkzODEzMjFiMDg3YzBhMjYwNzQ3ZTJiOTY4MTY2NGJmMDRhOTI1MDg4YTZjYjg0NjcyZThjM2I1In0.eyJhdWQiOiI5IiwianRpIjoiN2YzYjcxZGE2M2FiNDY1ZmQ4ZDViYjUxOTM4MTMyMWIwODdjMGEyNjA3NDdlMmI5NjgxNjY0YmYwNGE5MjUwODhhNmNiODQ2NzJlOGMzYjUiLCJpYXQiOjE2NTU3MDQ2NzIsIm5iZiI6MTY1NTcwNDY3MiwiZXhwIjoxNjg3MjQwNjcyLCJzdWIiOiI4NDAxIiwic2NvcGVzIjpbXX0.VdxLCmj-B1HnhhAkIehVPovVkbqQCuPoNi9KEFbuxKqYTlqkL8ZTqpo9Oac77NgJ6YCjgmymuV8CvxbGKsULuQ2Dn5uRszPbHnnTIYlN7QwF7Vw2IqyZsBjNb-3bJcw6lfurjza4qZnu8Wyqd9o-7R3-4VfP0yUmt7r2yKgZ207Lry8tn4Az8ziLX-G0NA16hNPCrwT6tzcOGnDwSKXjx_JRZIj4GXszBIHhLu0fsdXu44uMh3VrJE7b87FpYZlzpBCYwmOajkkyUHRPLEE81DtZr3Hxqsm2J2H7jLfqIA2ZFfY247iDWxDG7UI12dfCpmqkx25V8tPXYifIi9LzNUWRO_szpUslaiGkBzhxBQa1AGiJ3A5_themL5nW6MHokzhZZ0HfiFMH2gQGGgrRq41D8ppAjOl50UuXpkOzM_fw-db37Ub05b0_29JJNy6r_3Euy3Y5SKgVoMTc3gAywSfhEa09MA3DSj1a1cGJfJVd6HMLNjdz48kjbhWHqvZQG8O4wDUs6cFO4o1N1cq0wE_uTF_NHlud5jTlb1yVcFGQ8YM1LEq7AePRF_hDQVWl8J4BvfhXKRXHkiG20h7nKlH5K_F8XqjWa4hHMeo2mwZQYkaD2aA6QeNAIUCtZrpXhzKtSQPj_L-7rpmT8hn8Ijlysl-Ji8I8sH4EOgfhUvk",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "old_password",
+							"value": "123456",
+							"type": "text"
+						},
+						{
+							"key": "new_password",
+							"value": "hshrf123!",
+							"type": "text"
+						},
+						{
+							"key": "confirm_password",
+							"value": "hshrf123!",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}password/change",
+					"host": [
+						"{{freecia}}password"
+					],
+					"path": [
+						"change"
+					]
+				},
+				"description": "change user password"
+			},
+			"response": []
+		},
+		{
+			"name": "update user phone",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 401\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(401);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message is not empty\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.message).to.exist.and.to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate the error message format\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjlkY2JmNjdhNTEzMDA2NTRiOTc3NWMyN2RjOTkxMjAzM2JhNTAzYjJhODE5OGM4NTA0MWQzZGJhZjk5OGNjMWQ1Y2UzZDk2YmU3ZjNlNjQyIn0.eyJhdWQiOiI5IiwianRpIjoiOWRjYmY2N2E1MTMwMDY1NGI5Nzc1YzI3ZGM5OTEyMDMzYmE1MDNiMmE4MTk4Yzg1MDQxZDNkYmFmOTk4Y2MxZDVjZTNkOTZiZTdmM2U2NDIiLCJpYXQiOjE2NTY1MDIyOTAsIm5iZiI6MTY1NjUwMjI5MCwiZXhwIjoxNjg4MDM4MjkwLCJzdWIiOiI4NDAxIiwic2NvcGVzIjpbXX0.uJ077JOyKsucIeQVtF2HPM6PZgQkvoBXfHP-A_9TMg1B36f3MdpExHw_rHtmSNiccUglMa40A5ba7Y9KX5BwG60ZL_GgW_-ubzOTvSFEVQVuU3PMGcc-Qmn0Ca-yfmNcBaC5Ps5Qk60I5rAfPYh-u1ZSwft_xDeYSMgTcmS15XMGINVq1WddwgFORQjFK-7lAx_3Wr2kLgKmgxxy8V62GjTJzLQuieVrnZx0GmwPb3Q6dtD3ni9jMx9QmGNAzKNCNMiV6EePrIOcq1MIfLYsJ6Q4EsP7dsOGuZtYemxuBSIZdCNXQA2LKZtJfyuW91a95VMQrT6mU4jPasUb82rEWXRKqiZbHPQ-8lX6FX4Qz-855hjc5XiZtN8hrwhAmmtcisiiS8TJbqfZKGtyKpZI2DbfFHdzh9fflDAzKap7ZOS3XLf9Q2bqaQvbE7YccvGRkzwxJZjwOpX8BadcJuYYz1XJpY-ApLPAN7OVMUKcLGn0yTioP5GJsD-vb-oBtkn3G2j0j8nhKuD7NtpVcdZlCEt4AuwIycmHoGLDpN6m4eECdnq7D5eSMCHTm2Ke5BsL9sdDCkWQUiWNHE2uFLBRyG20rm8N-okeAr9xZymc-daPpsY__I_xN2NT9Wck-aFEThq11LZXpgxXy50VhqnqhlxNdRjcCOOvR_eKkGpfaNg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "mobile_number",
+							"value": "03120689455",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}user/phone/update",
+					"host": [
+						"{{freecia}}user"
+					],
+					"path": [
+						"phone",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update user address",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 401\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(401);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.exist.and.to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message is a non-empty string\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content type is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message field is present in the response\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  pm.expect(responseData.message).to.exist;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjIwNWM2YjE4NTQ4N2RmZWFiN2RiYTI5YmUyNWZkZDkwOTU3ZWMzMDlkNGFlN2MwNWE2YmY0OTQ4YTk5MmU1YzQzZmJlZGI3NGEyZmI4YjMxIn0.eyJhdWQiOiIxMyIsImp0aSI6IjIwNWM2YjE4NTQ4N2RmZWFiN2RiYTI5YmUyNWZkZDkwOTU3ZWMzMDlkNGFlN2MwNWE2YmY0OTQ4YTk5MmU1YzQzZmJlZGI3NGEyZmI4YjMxIiwiaWF0IjoxNjYzMTU3ODU5LCJuYmYiOjE2NjMxNTc4NTksImV4cCI6MTY5NDY5Mzg1OSwic3ViIjoiODQxNyIsInNjb3BlcyI6W119.clgG26LNxgbq-UTkqSvwXDefbdfKKinatOZMv-OT7YbWZ9AkDT7JQpryvPDzlzcprmV7aAaIgLFOd23XpbWTukvYIJxZtSSa2EC2tVKbWkJgCoMRePX0qWnU6gwmHGFMyTq6GKcWfcTLadNbXpNbk-K4TTXt5fl2sQvkQyrhqCSdqr88P-3u0Z7wRsZOdMDU2sfEV5D0Zf0AhHoaX1EHHT-KgyCcRge8fGUYFZMo4EBzMV3p42nht21FEkZGFnNzKm-gRtkaeyeWguJAXGwp3aJw7uKDgQykq7szEUpnlvEVccp35WM2jcoUGCPDgY4Mi8dkUDCOr9MrFfMWiNwcv4TXIYfbZDvAKtB3-MZE62QunMAHk5rNVzMMwtkth-c1Otq6lV5XAvQn2Oa3_e8Ai7I-lyKS-qi1dn0OWDiNusM4c5VtAlfIHMsefmJXfb8vW2jgiItA142PzYE1Rnr6J0pWlJMBwH-_aaAgywfanhtP2gpegntPI52tmTyXBIHIllqX966c04awmvMuvnN5gHLr-fpbWzDOVxs04HUDCCasJEQ8WKm-XXZ2ObVdzvT7PGoDRH7nwTLzZWSYtJ3r28oXyZ0n0ter6Ab5FtgUMS5RW6KaFmEOa4LhrLdcWNG_gDoOSOrt7nOjQk_MrmsroocvAETc9mpu6sNom_8EmXg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "address_title",
+							"value": "Office",
+							"type": "text"
+						},
+						{
+							"key": "latitude",
+							"value": "31.5101890",
+							"type": "text"
+						},
+						{
+							"key": "longitude",
+							"value": "74.3440840",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "office",
+							"type": "text"
+						},
+						{
+							"key": "street",
+							"value": "main road",
+							"description": "These Extra Direction Fields is required",
+							"type": "text"
+						},
+						{
+							"key": "block",
+							"value": "E1 block",
+							"description": "//",
+							"type": "text"
+						},
+						{
+							"key": "avenue",
+							"value": "waantech",
+							"description": "//",
+							"type": "text"
+						},
+						{
+							"key": "floor",
+							"value": "1st floor",
+							"description": "//",
+							"type": "text"
+						},
+						{
+							"key": "apartment",
+							"value": "",
+							"description": "//",
+							"type": "text"
+						},
+						{
+							"key": "building",
+							"value": "99 estate",
+							"description": "//",
+							"type": "text"
+						},
+						{
+							"key": "extra_direction",
+							"value": "near smart cut ",
+							"description": "//",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}user/address/update",
+					"host": [
+						"{{freecia}}user"
+					],
+					"path": [
+						"address",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update user profile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 401\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(401);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type is application/json\", function () {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message field is not empty\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.message).to.exist.and.to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate the structure of the response JSON\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"\r",
+							"  pm.expect(responseData).to.be.an('object');\r",
+							"  pm.expect(responseData.message).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response includes the required fields for user profile update\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.exist.and.to.be.a('string');\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjZkYTgwNjAyZjBjZDNlZTNlNmUzMWRjN2EyZWY4MzQ2M2VlYzBiNDYzNjZiNzI2MWY2Zjg1ZWQ1NzMzMGQzMGY5ZGZjNWVjYjAzYzE4ZmE1In0.eyJhdWQiOiI5IiwianRpIjoiNmRhODA2MDJmMGNkM2VlM2U2ZTMxZGM3YTJlZjgzNDYzZWVjMGI0NjM2NmI3MjYxZjZmODVlZDU3MzMwZDMwZjlkZmM1ZWNiMDNjMThmYTUiLCJpYXQiOjE2NjI5ODQyNzUsIm5iZiI6MTY2Mjk4NDI3NSwiZXhwIjoxNjk0NTIwMjc1LCJzdWIiOiI4NDA0Iiwic2NvcGVzIjpbXX0.aiPyhy52_HPF4RXoeiktbBRoDXfPPymvbDByXIQ6e-B5gpZUVCzXLcER0Fga3UpEnfbIf60RKC4AOZKbW2q85-OMKCoEQzdwy-ka8jl8Py94t3mwDhx0mxRqCNFO1uKbn1kPW_HogVqp2AVKr7H2VipUykUGwqLftag-qwwtplrGg7LvWftdxv3eLZA8xmPajwBApJXj6jI4Re97SU6oHQXYnTS_TJoMyx_RGZZJEgzkHHyf9sw_gGXcF6H8RQ2tAV7XPVLDybq7Ru0f_vB4JrELMV9VMPdmP4FkfNitYFj1_5fP4NkWWksJHAr-XIe7Thfz3u5oaFW4CaWZL5S-BTrhl52ekoazDu2bieQrnF-RB45ek7TmhbGUbNEYEILUX3Fu1RfmnnFcw7em_BLwc21ecOjkGBwYqJHiz0eCF_fdL_erdPc11D4kYt_COv8O6ANBnLQSt7kb2pnyUCloL5WUG3O8Z79eF_Aj88fba4QodE4ItsyCLzsN2Dy6hOelbJfssfCvm0yxbrZwr9rWnJGdL84HMGXcHZ0fLpBsilb0AJvoITVCU0kEZ9-C1-z5pzv6kJfdEC7Vbn3XlvOuK0Ad9e5C-bgDu0qoVQH1QoQs29kiDfAP66prWQ-lGfa6uc4GNQ_0SPTdZ1xNTU452DMB7kaQSMVZpg3P7mnUx1M",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "fullName",
+							"value": "Rehan ",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}user/profile/update",
+					"host": [
+						"{{freecia}}user"
+					],
+					"path": [
+						"profile",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add user address",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"Response status code is 401\", function () {",
+							"  pm.expect(pm.response.code).to.equal(401);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.message).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Message is a non-empty string\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type header is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify that the request is an HTTP POST request\", function () {",
+							"    pm.expect(pm.request.method).to.equal('POST');",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjIwNWM2YjE4NTQ4N2RmZWFiN2RiYTI5YmUyNWZkZDkwOTU3ZWMzMDlkNGFlN2MwNWE2YmY0OTQ4YTk5MmU1YzQzZmJlZGI3NGEyZmI4YjMxIn0.eyJhdWQiOiIxMyIsImp0aSI6IjIwNWM2YjE4NTQ4N2RmZWFiN2RiYTI5YmUyNWZkZDkwOTU3ZWMzMDlkNGFlN2MwNWE2YmY0OTQ4YTk5MmU1YzQzZmJlZGI3NGEyZmI4YjMxIiwiaWF0IjoxNjYzMTU3ODU5LCJuYmYiOjE2NjMxNTc4NTksImV4cCI6MTY5NDY5Mzg1OSwic3ViIjoiODQxNyIsInNjb3BlcyI6W119.clgG26LNxgbq-UTkqSvwXDefbdfKKinatOZMv-OT7YbWZ9AkDT7JQpryvPDzlzcprmV7aAaIgLFOd23XpbWTukvYIJxZtSSa2EC2tVKbWkJgCoMRePX0qWnU6gwmHGFMyTq6GKcWfcTLadNbXpNbk-K4TTXt5fl2sQvkQyrhqCSdqr88P-3u0Z7wRsZOdMDU2sfEV5D0Zf0AhHoaX1EHHT-KgyCcRge8fGUYFZMo4EBzMV3p42nht21FEkZGFnNzKm-gRtkaeyeWguJAXGwp3aJw7uKDgQykq7szEUpnlvEVccp35WM2jcoUGCPDgY4Mi8dkUDCOr9MrFfMWiNwcv4TXIYfbZDvAKtB3-MZE62QunMAHk5rNVzMMwtkth-c1Otq6lV5XAvQn2Oa3_e8Ai7I-lyKS-qi1dn0OWDiNusM4c5VtAlfIHMsefmJXfb8vW2jgiItA142PzYE1Rnr6J0pWlJMBwH-_aaAgywfanhtP2gpegntPI52tmTyXBIHIllqX966c04awmvMuvnN5gHLr-fpbWzDOVxs04HUDCCasJEQ8WKm-XXZ2ObVdzvT7PGoDRH7nwTLzZWSYtJ3r28oXyZ0n0ter6Ab5FtgUMS5RW6KaFmEOa4LhrLdcWNG_gDoOSOrt7nOjQk_MrmsroocvAETc9mpu6sNom_8EmXg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "address_title",
+							"value": "Office Address",
+							"type": "text"
+						},
+						{
+							"key": "latitude",
+							"value": "31.5101892",
+							"type": "text"
+						},
+						{
+							"key": "longitude",
+							"value": "74.3440842",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "Waantech",
+							"type": "text"
+						},
+						{
+							"key": "street",
+							"value": "new sth 4",
+							"type": "text"
+						},
+						{
+							"key": "block",
+							"value": "E1 block",
+							"type": "text"
+						},
+						{
+							"key": "avenue",
+							"value": "deliverychamps",
+							"type": "text"
+						},
+						{
+							"key": "floor",
+							"value": "1st floor",
+							"type": "text"
+						},
+						{
+							"key": "apartment",
+							"value": "q",
+							"type": "text"
+						},
+						{
+							"key": "building",
+							"value": "q",
+							"type": "text"
+						},
+						{
+							"key": "extra_direction",
+							"value": "q",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}user/address/add",
+					"host": [
+						"{{freecia}}user"
+					],
+					"path": [
+						"address",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "brand list",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.log(pm.globals.get(\"freecia\"));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate the data object\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.data).to.exist.and.to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Logo and banner objects have valid URL formats\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    responseData.data.data.forEach(function(brand) {\r",
+							"        pm.expect(brand.logo.url).to.match(/^https?:\\/\\/\\S+/);\r",
+							"        pm.expect(brand.banner.url).to.match(/^https?:\\/\\/\\S+/);\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Links array is present and contains at least one element\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData).to.have.property('links').that.is.an('array').and.not.empty;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxMSIsImp0aSI6ImE1Mjk5Y2I2ZjRkZjBkYzI3ZGEyMTA0NGE1NzAyZjA3ZjU5YzY5OTczMGU0ODQ0NWFiMmNiNmI2MDYyMTkzMTI5ODMwZWI1ZDY5NzczNzRlIiwiaWF0IjoxNzA4MjY0NDcxLjI4OTQ5MiwibmJmIjoxNzA4MjY0NDcxLjI4OTQ5NiwiZXhwIjoxNzM5ODg2ODcxLjI3MjM4NSwic3ViIjoiODU5MiIsInNjb3BlcyI6W119.WnWRPMoK3XkFeWgOlwl698WlyAQHLwJOX9NeLt2IItxJg-XeN1okoshc5Hc_3f3I_sApTNMhxeBEp5Ef5ImBGS4yUOU2jDFmJinXhTuv5q2S0cxj_Cz7ygeXF5MRUEoDb9pkBqZrFsIfkfo7l7DXhdJ5MsuPjVI4zNoCM6iU1Xw15_mVqX_vO4yYwi3KicOhkWeIr3HLp3eC76KScxNjKpGcHGmZT_-Lwnh3Lnlod4Y1LRNCIXx2TtfHGmrXIupYQZuloFsJRzuYccVXR6S8tCBZwHZRGTmZhy0RsJ3QaY6LjO4hWQFXVxNmuJ1p7qACP4Q02U-WxP-eL3gCxqbDUp1cYWy0b_hloe95SYOCo8xQTfdbrHYnI_RV6gq3S70NxPtAwSfDwNMPPaiSMq_YE4jvEX8uEXx468Sre64y-BcDDHDa9iKA3ekpjQHj70aNNlSEf29k9gf4RcHp8p1UaHSz0tTVa2DnFZtTMnGZWeaV5uXUjLJGZSfYorZQHMfgmRqhTKyLy8pG5Q4jP6fQ0fEk4dSaxSRKF6BIIl7gXe2WJ4gLM6lUrb5SSurVZyOtciFpm1YQocM1L-8PZChXkCjQeO-om7u0l9Fr5K92eKFIIkguDUE39iyuenCgOXkgGZQPp3MEdRFJLO_uPMvBjLiO8etEAKZuVTMs8jJ1Dk4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "3",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}brands",
+					"host": [
+						"{{freecia}}brands"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "2",
+							"disabled": true
+						},
+						{
+							"key": "q",
+							"value": "maze",
+							"disabled": true
+						},
+						{
+							"key": "limit",
+							"value": "2",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user address",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"Response status code is 401\", function () {",
+							"    pm.expect(pm.response.code).to.equal(401);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.message).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Message is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content type is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImE4YjdiZmUxYjcxOWFlM2Y2MTA2N2NjMWE2NTk5MTczM2Y2MjIwMTU2YjJhY2E4M2FlMWUwODU1YzYyZTk1MTVjYzM4MWVmY2Q5YTAxNmFjIn0.eyJhdWQiOiI5IiwianRpIjoiYThiN2JmZTFiNzE5YWUzZjYxMDY3Y2MxYTY1OTkxNzMzZjYyMjAxNTZiMmFjYTgzYWUxZTA4NTVjNjJlOTUxNWNjMzgxZWZjZDlhMDE2YWMiLCJpYXQiOjE2NjI1NDA1MzQsIm5iZiI6MTY2MjU0MDUzNCwiZXhwIjoxNjk0MDc2NTM0LCJzdWIiOiI4NDA0Iiwic2NvcGVzIjpbXX0.HJm8-BAF0IMIiGYL51rdVHv3hWT3Vr4769hEgW6MGGiGPb_zkpwcOTYxakZG6ZANHChodegXNYCuL_-lzLLDoV39CtN_9u9moQiLW3r0Fssh_Je453-CoGPORFfxlzf7MvyVs3YlDWCCQ3CXILRjPUa_Yet6APDbNfcNY5Vn_aU6_0-VT-BKudpVPi_BhhwgcxaPVMk1hz2YWwEZm_3bLre3-7eyg5-oBUWV5ehVk--cYh3Ib75vy83JkMAfHHRmz1PgPK_zsqKJmJWcpZLJbHOSKCWRI_91PMi86CQJTyU-9d3kBxYQxnzd6_FnR0V8vBzlY61n5EzzbZtJ5etyo8SDvwgOAyOLiIJMB98XujynonxENrcSoI5HKVJdTTirnj1KHo_RvCl-ATwB7ihB_7klsJCVLgh9m95yi5cXtdXFKSBC8H4-lWowB3jCyOZZ96XGsQXm-ulgPKRvzMp5V3XF5Vi_k5nLjB0O90FoBEyUUFDvrvjVty0s5H0j4dcpMivvbw14Nq1VcLpdt4Zx9PMaqynJXHYO2dpWox6rDKrOV9CbrA4TLNNR2hEiFWdYxVh9wQc7gnYbRn387trs--_8OfSB2mxd0MNNlO6SZdBffCMlgMFYaNj_1zjojRLH07CDWFndesBVI2A9JHdMKAz58urcGN2mpXx_txDA3OQ",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{freecia}}user/address",
+					"host": [
+						"{{freecia}}user"
+					],
+					"path": [
+						"address"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "brands category",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields - ResponseHeader, data\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.have.property('ResponseHeader');\r",
+							"    pm.expect(responseData).to.have.property('data');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate the image object and its properties - url\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"\r",
+							"  pm.expect(responseData).to.be.an('object');\r",
+							"  pm.expect(responseData.data).to.be.an('object');\r",
+							"  pm.expect(responseData.data).to.have.property('image');\r",
+							"  pm.expect(responseData.data.image).to.be.an('object');\r",
+							"  pm.expect(responseData.data.image).to.have.property('url');\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{freecia}}categories",
+					"host": [
+						"{{freecia}}categories"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "3",
+							"disabled": true
+						},
+						{
+							"key": "brand_id",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "limit",
+							"value": "2",
+							"disabled": true
+						},
+						{
+							"key": "q",
+							"value": "sni",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type header is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Data array is present and contains at least one element\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.data).to.exist.and.to.be.an('array').with.lengthOf.at.least(1, \"Data array should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Images array is present and contains the expected number of elements\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.have.property('data');",
+							"    pm.expect(responseData.data).to.be.an('object');",
+							"    pm.expect(responseData.data).to.have.property('images');",
+							"    pm.expect(responseData.data.images).to.be.an('array');",
+							"    pm.expect(responseData.data.images).to.have.lengthOf.at.least(1);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxMSIsImp0aSI6ImUwYmQxNjEyZWVlMGRiNzNiNzRiOGZiOTg2NWRmZWQ3MDlhZjI3NzQzYTQ1ZDU2OTNhYzE5Y2M5MGY5ZmNjOWQ5NGY4MDQ0MjQ1ODkzMTc3IiwiaWF0IjoxNzEwOTIzNDQxLjAyNDc3NiwibmJmIjoxNzEwOTIzNDQxLjAyNDc3OCwiZXhwIjoxNzQyNDU5NDQxLjAyMjgsInN1YiI6Ijg1ODciLCJzY29wZXMiOltdfQ.mypBBm4jKA6ow4ALX0PDmlwLv_0eQ981b09TDzHNlUOFi5oVX6ULV557uutfIIDr7iY8KjHGtAiFC1V31PPxClQNt3DNreyyFQZTUtG_UorHBopYyOI1COdqJFPH5kTymxoq9JlJMlweJwABgFnim5LnU1ceXokWqKL9twtiuWaV9pnPL5ddfu4whgH5CUyyDh1Gra-t65g4oiW9wdHaf2OH2eljXsgFCD9g5UaV9_9BFcTNrBAOAiahnlkTl0iiKZfBTiomdSCaQ1_OYtzRvBQIGhB2pnpIeZSCekIZhrS2SYsjheij-KVqwkht4QT8rzGt4kMBjt8PehlxQMyNAyR91O_AAhAF9mIOjgHIoSrPpii6hkhZZX7JwR2G4VDM2nD4u6YQ0omXV1Aug5CfDE_aFbomLgLYGRs1c3EeGlRhbBd8i2ObSWGLk1fmfWxhhba8CFJ0wpuTAYpE1dG-jey0XVn99gSQMZRbVmcAZqCJqyMPmrd1yb49PklgKvguDArUnZR_85XTD6rF-EglrOVOQhR0qqUnxPTGx4QQiPqPRibbr-RuqfwBBwe2ffG7DAf4ZlbMx0JXe4qv2bIHBSfkUF7YMnyCZxLF335k3wtQwOxdsgY_zHuUCrCaoMo_jmXv153dxjmrT3K-JuEHTO1e_821ubCPZqugK9X7mqk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "isRetailer",
+						"value": "false",
+						"description": "this should be true and false",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{freecia}}products?page=1",
+					"host": [
+						"{{freecia}}products"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "brand_id",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "q",
+							"value": "shoes",
+							"disabled": true
+						},
+						{
+							"key": "category_id",
+							"value": "2",
+							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get product feedback",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Validate ResponseHeader object\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.ResponseHeader).to.exist.and.to.be.an('object');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Data array is present and contains the expected number of elements\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.data).to.exist.and.to.be.an('array');",
+							"    pm.expect(responseData.data).to.have.lengthOf(1);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Customer name is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    responseData.data.forEach(function(item) {",
+							"        pm.expect(item.customer_name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Customer name should not be empty\");",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{freecia}}products/feedback?product_id=1&type=deal",
+					"host": [
+						"{{freecia}}products"
+					],
+					"path": [
+						"feedback"
+					],
+					"query": [
+						{
+							"key": "product_id",
+							"value": "1",
+							"description": "req id of product and deal"
+						},
+						{
+							"key": "type",
+							"value": "deal",
+							"description": "it should be deal and product and by default it shows only product reviews"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user order list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 401\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(401);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required Content-Type header with value 'application/json'\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include('application/json');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message field is present in the response\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.have.property(\"message\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message is a non-empty string\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response body is a valid JSON格式\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImU1N2QxY2FiZmQyOGU2NmI2N2VmZDIzNzg4ODY5ZjkzYzJiOGUyODI1ODFiMzEwMTg2MGNiZjdlZTdhYmM5ZjU2YTM5NTVjMWMzNzBmMjViIn0.eyJhdWQiOiI5IiwianRpIjoiZTU3ZDFjYWJmZDI4ZTY2YjY3ZWZkMjM3ODg4NjlmOTNjMmI4ZTI4MjU4MWIzMTAxODYwY2JmN2VlN2FiYzlmNTZhMzk1NWMxYzM3MGYyNWIiLCJpYXQiOjE2NjQyODI1OTYsIm5iZiI6MTY2NDI4MjU5NiwiZXhwIjoxNjk1ODE4NTk2LCJzdWIiOiI4NDA0Iiwic2NvcGVzIjpbXX0.LvyMRopuFTueT1ZA36iXYeYmcVOWL-39opNeP_oyscVrbdxY1t8MJ67hufZSz6VICRt3XrNNdWs44drsOlAVhsrd2-Ew-3ZwuC5D9xHGAs_KZpnDVOQ-NKH4PfORgtoA2y9xnxbKvd-dgt7l7RFRQMe98SVc4QTurFQQjMivKrV6_WCkWX_fWDVAJuheCzLDJ4ivZMRRjfYvuM12sWxQVj6BeLgCZvZY4aDiw6LE0zT33gVH2v38GLtInG2bqCy4NNJ9xUwMT03NsLrgtlH9TciX4mjmetyvlFllrzJo0o9ZnfJRvH2Rb--G62cpl2SGuqcwY6B651GTCOOv2OsjTLfqTqG3rdOjm6N8G4_Js272Zi5anesXouovlV3IBYk1pPPbqP19qonCeZiHSFoG7m1M2Ds_IX6sfua6zVbbOpBjUq_-bkFaJsYn-EbAOAz2eiNh8nKtaIbp4KmtOu_M4fG-1_tS652ZHeudNikUcpZJOgyS3Xeu9DRqhETaxLI_Oe0JHTSbHY2PdIYCqn-fY4k4zq0B0yn8qRJrMQjElCn-GyorKnQLDTnyWNUXSGoXZ9r7eAdXKPuMHU5-N4ho15-epj6YEQdPlap-OQkdKq7eDcRh1HWMkdNr40_BwH_269xjcVwU6716A6noId3vHbOvnGcN5Pb9gjddBBoy3yU"
+					}
+				],
+				"url": {
+					"raw": "{{freecia}}user/orders",
+					"host": [
+						"{{freecia}}user"
+					],
+					"path": [
+						"orders"
+					]
+				},
+				"description": "order list"
+			},
+			"response": []
+		},
+		{
+			"name": "delete user address",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 401\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(401);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required Content-Type header\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message field is present in the response\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message field is a non-empty string\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Id parameter is required in the request URL\", function () {\r",
+							"    const requestUrl = pm.request.url;\r",
+							"    \r",
+							"    pm.expect(requestUrl.query.has(\"id\")).to.be.true;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjY5Nzk3Y2FlNzc1NGExNmZkN2I5ODA4MDBmZjYyOGY0ZmQ3OWUwZWZmMjU1NTExNGFhNzhlM2IwOTMyMjBkMGU2MzMyZGY5ZDBkOWViOGQxIn0.eyJhdWQiOiI5IiwianRpIjoiNjk3OTdjYWU3NzU0YTE2ZmQ3Yjk4MDgwMGZmNjI4ZjRmZDc5ZTBlZmYyNTU1MTE0YWE3OGUzYjA5MzIyMGQwZTYzMzJkZjlkMGQ5ZWI4ZDEiLCJpYXQiOjE2NTQ2NzE2MDMsIm5iZiI6MTY1NDY3MTYwMywiZXhwIjoxNjg2MjA3NjAzLCJzdWIiOiI4NDAxIiwic2NvcGVzIjpbXX0.EglkfRKTRdnhlyM6K66qXEOgtDVv_d_-wBfKGcJN7LoAukJ6getBcEbG_6-LcRghGQnYy81Sr7Vw3wr3zgVlWlXqeMKEAlrQG8KbDKleDmPfKUgazYGdWJB-7v_BKT1aishOeCZo6jTKwhA6zj4-_FAt1rOfdp07YDWF_Yd9XHtguYQhr7TylByX3Pdz4R_qE6aBnGV99eTtcDb6pPHFXsL1OeSIjzRMkS_VHFs9Cc5Gk91LhPU2f9EqP1na-ZEerIUUv6w1AIz37skD_gl2pql4wlp-j-aVjps0d6FQTmMeEEfOSSjpHE65B-ZycE3xNX-WJUDolJDBdrdxJ2wJQ_cjpKl76GLHRkdNGP31BIA9ZzM99tfNsy4bYhlglIoh6zB0jTU2p8857C6GxEpnxP-AT8Yyda9JlbetMBrdsNCmXV2r6_FqNaIGyBgC-DdgiOxZMqRDKlaNTJILrNYte0L4silxQydQIR0smRlQ2mAWFSCW18JkdFrKA_7LPWuX81m-0wjotGzgWy4OQOfj5VyIhZEf_KrpFse1l5pf2Ip_caMwYTOeD39eb4lcLM9J08wi8Cd7279drmEOgMJNh53QquFmxtj46DjbPlm_Zip0kte6D0HjXYX2hV_h6JVGU9LXetscFs9eGUhlPm0ufofWHRvKXcchkDruXHeRKtk",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{freecia}}user/address/delete?id=7588",
+					"host": [
+						"{{freecia}}user"
+					],
+					"path": [
+						"address",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "7588"
+						}
+					]
+				},
+				"description": "delete user address"
+			},
+			"response": []
+		},
+		{
+			"name": "create cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"Response status code is 401\", function () {",
+							"    pm.expect(pm.response.code).to.equal(401);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required Content-Type header\", function () {",
+							"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Message field is present in the response\", function () {",
+							"  const responseData = pm.response.json();",
+							"  pm.expect(responseData.message).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Message is a non-empty string\", function () {",
+							"  const responseData = pm.response.json();",
+							"",
+							"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Message is descriptive and provides useful information\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData.message).to.exist.and.to.be.a('string', \"Message should be a string\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjFiN2U0Y2VlMmU3ZTNiOGZkYzdjMzJiZjAxNTQzYWQyZDBiOGUyYzI5NzYyYjE2YjBhZTVlZjNlM2VlY2QxMjJiOGQzYTFjOTI1NmE0ZjQ0In0.eyJhdWQiOiI5IiwianRpIjoiMWI3ZTRjZWUyZTdlM2I4ZmRjN2MzMmJmMDE1NDNhZDJkMGI4ZTJjMjk3NjJiMTZiMGFlNWVmM2UzZWVjZDEyMmI4ZDNhMWM5MjU2YTRmNDQiLCJpYXQiOjE2NjU1NDkxOTEsIm5iZiI6MTY2NTU0OTE5MSwiZXhwIjoxNjk3MDg1MTkxLCJzdWIiOiI4NDA4Iiwic2NvcGVzIjpbXX0.mqEKbCJ2nDvG_LFzMHK418POFCi9kd0prWhomv9cz6EnyDi7mNXFhGFWUCWyupDQRGYOTiGbmIdzgPeqrnZrUbCY_Him6BrWe-Y-B2gNfVnYGQmcjxxFwxUkE9eml1EitTO8AytoUIh0Nck60B6yO3xzE95G69VEyNVZ0kWNlYIDRz1bfBh-3yCuvJnaNTMD8ntjwGAAeXZIGG8fMvuH8LxKuprPOdIVVx7aJg7a6u-KVjX99Schj1WD4X5TKTwMPQoQwDnOkoZtFLxwbZRuSnMokf8gH_isaCLoE06oSl4jDsAvIjXE_lNlG0oRpdkUv3YSCBeP9XHlXmeK23i1DYg9VsmOOj8jAa2I0k56ng9A3q-lHF4gyCST1Qj78XF3ryrPLWeVecges-czBIGYasgl6zyW4bWbgCEiDdeRezVIxzarIou1vFUgvLxRl3bxc4JlN0m9Vc50GQHs52wViorXi1BRvWYhmtxUi4UC_ysYzHR7M-YQoW-VaETxdCQnTXrOwA6Bz6IGz2RXviO11ARfcj87dSTptKZInRnkzGbTJN5zgIygLl0rFYhVCSBkmDCfRMyZpYoOKx9Fb4EYooATze3H68p8ymxKzebYFY8_rs6aTz1DgoOy2pYTjolU5irbbS2f-_rxkP5EwKRbwB12Zb-OuXk8ch19gbW2lWE",
+						"disabled": true
+					},
+					{
+						"key": "isRetailer",
+						"value": "false",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "product_id",
+							"value": "1",
+							"description": "required.id of product or deal",
+							"type": "text"
+						},
+						{
+							"key": "quantity",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "user_token",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "product_size_id",
+							"value": "52",
+							"description": "required if type = product",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "product",
+							"description": "it should be Product or Deal",
+							"type": "text"
+						},
+						{
+							"key": "attribute_id",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "attribute_value",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "attributes[]",
+							"value": "{\"attribute_name\":\"color\",\"selected_attribute\":\"red\"}",
+							"type": "text"
+						},
+						{
+							"key": "attributes[]",
+							"value": "{\"attribute_name\":\"customer_note\",\"selected_attribute\":\"Testing, Please ignore\"}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}cart/add-product",
+					"host": [
+						"{{freecia}}cart"
+					],
+					"path": [
+						"add-product"
+					]
+				},
+				"description": "create cart"
+			},
+			"response": []
+		},
+		{
+			"name": "update product quantity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 401\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(401);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required Content-Type header\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message field is present in the response\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.message).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message is a non-empty string\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify the request body contains the required parameters for updating quantity\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.exist;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImU1N2QxY2FiZmQyOGU2NmI2N2VmZDIzNzg4ODY5ZjkzYzJiOGUyODI1ODFiMzEwMTg2MGNiZjdlZTdhYmM5ZjU2YTM5NTVjMWMzNzBmMjViIn0.eyJhdWQiOiI5IiwianRpIjoiZTU3ZDFjYWJmZDI4ZTY2YjY3ZWZkMjM3ODg4NjlmOTNjMmI4ZTI4MjU4MWIzMTAxODYwY2JmN2VlN2FiYzlmNTZhMzk1NWMxYzM3MGYyNWIiLCJpYXQiOjE2NjQyODI1OTYsIm5iZiI6MTY2NDI4MjU5NiwiZXhwIjoxNjk1ODE4NTk2LCJzdWIiOiI4NDA0Iiwic2NvcGVzIjpbXX0.LvyMRopuFTueT1ZA36iXYeYmcVOWL-39opNeP_oyscVrbdxY1t8MJ67hufZSz6VICRt3XrNNdWs44drsOlAVhsrd2-Ew-3ZwuC5D9xHGAs_KZpnDVOQ-NKH4PfORgtoA2y9xnxbKvd-dgt7l7RFRQMe98SVc4QTurFQQjMivKrV6_WCkWX_fWDVAJuheCzLDJ4ivZMRRjfYvuM12sWxQVj6BeLgCZvZY4aDiw6LE0zT33gVH2v38GLtInG2bqCy4NNJ9xUwMT03NsLrgtlH9TciX4mjmetyvlFllrzJo0o9ZnfJRvH2Rb--G62cpl2SGuqcwY6B651GTCOOv2OsjTLfqTqG3rdOjm6N8G4_Js272Zi5anesXouovlV3IBYk1pPPbqP19qonCeZiHSFoG7m1M2Ds_IX6sfua6zVbbOpBjUq_-bkFaJsYn-EbAOAz2eiNh8nKtaIbp4KmtOu_M4fG-1_tS652ZHeudNikUcpZJOgyS3Xeu9DRqhETaxLI_Oe0JHTSbHY2PdIYCqn-fY4k4zq0B0yn8qRJrMQjElCn-GyorKnQLDTnyWNUXSGoXZ9r7eAdXKPuMHU5-N4ho15-epj6YEQdPlap-OQkdKq7eDcRh1HWMkdNr40_BwH_269xjcVwU6716A6noId3vHbOvnGcN5Pb9gjddBBoy3yU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "product_id",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "quantity",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "product_size_id",
+							"value": "4",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "Product",
+							"description": "it should be Deal or Product",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}cart/product/updatequantity",
+					"host": [
+						"{{freecia}}cart"
+					],
+					"path": [
+						"product",
+						"updatequantity"
+					]
+				},
+				"description": "update product quantity"
+			},
+			"response": []
+		},
+		{
+			"name": "clear user cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 401\", function () {\r",
+							"  pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message is a non-empty string\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify that the request clears the cart\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.exist;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImU1N2QxY2FiZmQyOGU2NmI2N2VmZDIzNzg4ODY5ZjkzYzJiOGUyODI1ODFiMzEwMTg2MGNiZjdlZTdhYmM5ZjU2YTM5NTVjMWMzNzBmMjViIn0.eyJhdWQiOiI5IiwianRpIjoiZTU3ZDFjYWJmZDI4ZTY2YjY3ZWZkMjM3ODg4NjlmOTNjMmI4ZTI4MjU4MWIzMTAxODYwY2JmN2VlN2FiYzlmNTZhMzk1NWMxYzM3MGYyNWIiLCJpYXQiOjE2NjQyODI1OTYsIm5iZiI6MTY2NDI4MjU5NiwiZXhwIjoxNjk1ODE4NTk2LCJzdWIiOiI4NDA0Iiwic2NvcGVzIjpbXX0.LvyMRopuFTueT1ZA36iXYeYmcVOWL-39opNeP_oyscVrbdxY1t8MJ67hufZSz6VICRt3XrNNdWs44drsOlAVhsrd2-Ew-3ZwuC5D9xHGAs_KZpnDVOQ-NKH4PfORgtoA2y9xnxbKvd-dgt7l7RFRQMe98SVc4QTurFQQjMivKrV6_WCkWX_fWDVAJuheCzLDJ4ivZMRRjfYvuM12sWxQVj6BeLgCZvZY4aDiw6LE0zT33gVH2v38GLtInG2bqCy4NNJ9xUwMT03NsLrgtlH9TciX4mjmetyvlFllrzJo0o9ZnfJRvH2Rb--G62cpl2SGuqcwY6B651GTCOOv2OsjTLfqTqG3rdOjm6N8G4_Js272Zi5anesXouovlV3IBYk1pPPbqP19qonCeZiHSFoG7m1M2Ds_IX6sfua6zVbbOpBjUq_-bkFaJsYn-EbAOAz2eiNh8nKtaIbp4KmtOu_M4fG-1_tS652ZHeudNikUcpZJOgyS3Xeu9DRqhETaxLI_Oe0JHTSbHY2PdIYCqn-fY4k4zq0B0yn8qRJrMQjElCn-GyorKnQLDTnyWNUXSGoXZ9r7eAdXKPuMHU5-N4ho15-epj6YEQdPlap-OQkdKq7eDcRh1HWMkdNr40_BwH_269xjcVwU6716A6noId3vHbOvnGcN5Pb9gjddBBoy3yU",
+						"description": "auth token.user must be login."
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{freecia}}cart/clear",
+					"host": [
+						"{{freecia}}cart"
+					],
+					"path": [
+						"clear"
+					]
+				},
+				"description": "clear user cart"
+			},
+			"response": []
+		},
+		{
+			"name": "remove cart products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 401\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(401);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message is a non-empty string\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify that the message field is present in the response\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.exist;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImU1N2QxY2FiZmQyOGU2NmI2N2VmZDIzNzg4ODY5ZjkzYzJiOGUyODI1ODFiMzEwMTg2MGNiZjdlZTdhYmM5ZjU2YTM5NTVjMWMzNzBmMjViIn0.eyJhdWQiOiI5IiwianRpIjoiZTU3ZDFjYWJmZDI4ZTY2YjY3ZWZkMjM3ODg4NjlmOTNjMmI4ZTI4MjU4MWIzMTAxODYwY2JmN2VlN2FiYzlmNTZhMzk1NWMxYzM3MGYyNWIiLCJpYXQiOjE2NjQyODI1OTYsIm5iZiI6MTY2NDI4MjU5NiwiZXhwIjoxNjk1ODE4NTk2LCJzdWIiOiI4NDA0Iiwic2NvcGVzIjpbXX0.LvyMRopuFTueT1ZA36iXYeYmcVOWL-39opNeP_oyscVrbdxY1t8MJ67hufZSz6VICRt3XrNNdWs44drsOlAVhsrd2-Ew-3ZwuC5D9xHGAs_KZpnDVOQ-NKH4PfORgtoA2y9xnxbKvd-dgt7l7RFRQMe98SVc4QTurFQQjMivKrV6_WCkWX_fWDVAJuheCzLDJ4ivZMRRjfYvuM12sWxQVj6BeLgCZvZY4aDiw6LE0zT33gVH2v38GLtInG2bqCy4NNJ9xUwMT03NsLrgtlH9TciX4mjmetyvlFllrzJo0o9ZnfJRvH2Rb--G62cpl2SGuqcwY6B651GTCOOv2OsjTLfqTqG3rdOjm6N8G4_Js272Zi5anesXouovlV3IBYk1pPPbqP19qonCeZiHSFoG7m1M2Ds_IX6sfua6zVbbOpBjUq_-bkFaJsYn-EbAOAz2eiNh8nKtaIbp4KmtOu_M4fG-1_tS652ZHeudNikUcpZJOgyS3Xeu9DRqhETaxLI_Oe0JHTSbHY2PdIYCqn-fY4k4zq0B0yn8qRJrMQjElCn-GyorKnQLDTnyWNUXSGoXZ9r7eAdXKPuMHU5-N4ho15-epj6YEQdPlap-OQkdKq7eDcRh1HWMkdNr40_BwH_269xjcVwU6716A6noId3vHbOvnGcN5Pb9gjddBBoy3yU"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "product_id",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "product_size_id",
+							"value": "7",
+							"type": "text"
+						},
+						{
+							"key": "cart_item_id",
+							"value": "28",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}cart/remove-product",
+					"host": [
+						"{{freecia}}cart"
+					],
+					"path": [
+						"remove-product"
+					]
+				},
+				"description": "remove cart products"
+			},
+			"response": []
+		},
+		{
+			"name": "order place",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 401\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(401);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message is a non-empty string\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify that the request body is not empty\", function () {\r",
+							"    const requestData = pm.request.json();\r",
+							"    \r",
+							"    pm.expect(requestData).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImU1N2QxY2FiZmQyOGU2NmI2N2VmZDIzNzg4ODY5ZjkzYzJiOGUyODI1ODFiMzEwMTg2MGNiZjdlZTdhYmM5ZjU2YTM5NTVjMWMzNzBmMjViIn0.eyJhdWQiOiI5IiwianRpIjoiZTU3ZDFjYWJmZDI4ZTY2YjY3ZWZkMjM3ODg4NjlmOTNjMmI4ZTI4MjU4MWIzMTAxODYwY2JmN2VlN2FiYzlmNTZhMzk1NWMxYzM3MGYyNWIiLCJpYXQiOjE2NjQyODI1OTYsIm5iZiI6MTY2NDI4MjU5NiwiZXhwIjoxNjk1ODE4NTk2LCJzdWIiOiI4NDA0Iiwic2NvcGVzIjpbXX0.LvyMRopuFTueT1ZA36iXYeYmcVOWL-39opNeP_oyscVrbdxY1t8MJ67hufZSz6VICRt3XrNNdWs44drsOlAVhsrd2-Ew-3ZwuC5D9xHGAs_KZpnDVOQ-NKH4PfORgtoA2y9xnxbKvd-dgt7l7RFRQMe98SVc4QTurFQQjMivKrV6_WCkWX_fWDVAJuheCzLDJ4ivZMRRjfYvuM12sWxQVj6BeLgCZvZY4aDiw6LE0zT33gVH2v38GLtInG2bqCy4NNJ9xUwMT03NsLrgtlH9TciX4mjmetyvlFllrzJo0o9ZnfJRvH2Rb--G62cpl2SGuqcwY6B651GTCOOv2OsjTLfqTqG3rdOjm6N8G4_Js272Zi5anesXouovlV3IBYk1pPPbqP19qonCeZiHSFoG7m1M2Ds_IX6sfua6zVbbOpBjUq_-bkFaJsYn-EbAOAz2eiNh8nKtaIbp4KmtOu_M4fG-1_tS652ZHeudNikUcpZJOgyS3Xeu9DRqhETaxLI_Oe0JHTSbHY2PdIYCqn-fY4k4zq0B0yn8qRJrMQjElCn-GyorKnQLDTnyWNUXSGoXZ9r7eAdXKPuMHU5-N4ho15-epj6YEQdPlap-OQkdKq7eDcRh1HWMkdNr40_BwH_269xjcVwU6716A6noId3vHbOvnGcN5Pb9gjddBBoy3yU",
+						"disabled": true
+					},
+					{
+						"key": "isRetailer",
+						"value": "false",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "delivery_address_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "customer_note",
+							"value": "Thanks for the promo code",
+							"type": "text"
+						},
+						{
+							"key": "payment_method",
+							"value": "cash",
+							"description": "Right now there is only one payment method and that is cash.\n",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}user/order-place",
+					"host": [
+						"{{freecia}}user"
+					],
+					"path": [
+						"order-place"
+					]
+				},
+				"description": "remove cart products"
+			},
+			"response": []
+		},
+		{
+			"name": "order feedback",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"Response status code is 401\", function () {",
+							"  pm.expect(pm.response.code).to.equal(401);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.message).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Message is not empty\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.message).to.exist.and.to.not.be.empty;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type header is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response message is a non-empty string\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImQ5ZDI0YzllZTRlMTUxZjdiMTg0MTQ3OWU2MDViMWM4OTE3OGQzYmNmYWI1MzQzYjY3MmEyY2JlYzI1NjExMmIyZTJiMzE0N2RjMTdjNjljIn0.eyJhdWQiOiI5IiwianRpIjoiZDlkMjRjOWVlNGUxNTFmN2IxODQxNDc5ZTYwNWIxYzg5MTc4ZDNiY2ZhYjUzNDNiNjcyYTJjYmVjMjU2MTEyYjJlMmIzMTQ3ZGMxN2M2OWMiLCJpYXQiOjE2NjQwMjg0MTAsIm5iZiI6MTY2NDAyODQxMCwiZXhwIjoxNjk1NTY0NDEwLCJzdWIiOiI4NDA0Iiwic2NvcGVzIjpbXX0.Hf5AB2l5ow-b-raQViOZBF_-2OTe4aLnSI2IeErEb60XOzJlaWsjFXYlfY_wxtkpxa5-h7omfP0egOBnFNjKxs5RqVr4c6EifvIsIPOAY8fTn14D_93tPJCky8G1c3om1EcRVIHp0sjwfItpFJCC3wU8tpGA8pgT8C58fTyPJJiTz0tIW96O069dClLvrNBkSLva2ji93AQW-nuwHUeQAmdf1z3gKo-QMqxLrrfjEQvbWGZmdzSRpcm2eNosNFIfnwcUCxC4BoJHaSC-UmIEb7EHis7-UeVdVUlE_pLGG9JpTamK_2-HIQ9EIO6GSKJozJMhE0WKyU0onpDC9NUKFoSfA2Aew5pvQiyW9Jl8ASYNmJDBWm-6683Dtmtzdnd5GnDAoNn2GsDXz5xr6msZrlhkJTSNYBlSDBWSihwfeEmX7JzKDlWfiWhZPhIAit4jb-VHbrQ32kItc9TgKYq1pWdgqCf365thiqYqUuOD-MsF0TwBNmDe_hgnwstAE1vKiiZ29pjWMx2-z5ypnkHcrnNGEziMJ9idK0_lVgeRrRp6zT2GZjxUze9OFaBIiV8ctsJG-F2DSf1XHmVpR0HykzX2WO0FYxRxz-GMOxL1JaH2affdEJ-2BrKcXMxSgbdcoxrwkBUGGGbHlWhfuwFJnaNXfDw74wtvhvOYmpiUMak"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "order_id",
+							"value": "8",
+							"type": "text"
+						},
+						{
+							"key": "feedback",
+							"value": "Good",
+							"type": "text"
+						},
+						{
+							"key": "rating",
+							"value": "4",
+							"type": "text"
+						},
+						{
+							"key": "overall_service",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "customer_care",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "speed_efficiency",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "product_quality",
+							"value": "0",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}user/order-feedback",
+					"host": [
+						"{{freecia}}user"
+					],
+					"path": [
+						"order-feedback"
+					]
+				},
+				"description": "remove cart products"
+			},
+			"response": []
+		},
+		{
+			"name": "verify promo code not in use",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 401\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(401);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required Content-Type header with value application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message field is present in the response\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.message).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message field is a non-empty string\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response body structure matches the expected schema\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjU3ZTE0YWUzMzA2YWI4MWNkMWQyNWY0YTY2ODY2YjI3MWE3NWZmZWNhZDdmNzIzNTFkYjQ4MWU4NmU1OGQ0ZGIxMjliNDY5ZTY1NjVmZjgxIn0.eyJhdWQiOiI5IiwianRpIjoiNTdlMTRhZTMzMDZhYjgxY2QxZDI1ZjRhNjY4NjZiMjcxYTc1ZmZlY2FkN2Y3MjM1MWRiNDgxZTg2ZTU4ZDRkYjEyOWI0NjllNjU2NWZmODEiLCJpYXQiOjE2NTgxMTkxNTIsIm5iZiI6MTY1ODExOTE1MiwiZXhwIjoxNjg5NjU1MTUyLCJzdWIiOiI4NDAxIiwic2NvcGVzIjpbXX0.Rh96jCra7CjPh7bv7MkAxpC1A5C3XcbOJyYz6bA4dRcYaCCyKz8dChP9fwLpJBPjS6NN8-HInP7lekzlWCDKqDQTh5ieJpe3W_1tYxowOBkzTujhZLGXGkN47QV1DXfd7pPGHjdY9v2d_2akMmjQ-sSioTU9kZhlMiRPT0UBm-M_Po4BP9_7fkGU1odiA7SOq_5qgdV8GrEUSyTdjRtTl91omMwCePSIEwFbfboHjaBKsOPbSpv85jpP7FSOVrILcY3TpwTAhuF9vOv69RnCsRXX69uN0ip2fKb0SQVlK5q4VNSvyFIKWedozajRJmBkne-SpR-Ql6KD2qxpnmmB3tbU5DH8M0xeZ0fLOShdbsJvZhAjiPcIQCxWowSuo1lwqy8nhE-EEK6xVm7tBOsIHD3gSySc2BDqP3V1JqmznZwbwBag7uL3wwLm1Q2GV16fhFwg9fg6epIYtEJnY2pr8OQABdmt-uTqy66B0tEcCIJ7Wnneff1B7Vx-jykSjFRHjjBwoHBk1ECXekN43CtSzMSeCCI67hJenuazcFsa3vMdIjapJkgKjDF_O4C3FjNgwH9T8vYbnMiKkW8t_ntmL6H44ktJvid_hu8VU246sePNgGC_LCOkezCyZC8n-nzPrp69Eisk0iBtBiCNesA699U0n0xBNXiE-E67H2eX3cY"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "promo_code",
+							"value": "NEWT14",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}cart/verify/promo/code",
+					"host": [
+						"{{freecia}}cart"
+					],
+					"path": [
+						"verify",
+						"promo",
+						"code"
+					]
+				},
+				"description": "verify voucher discount code"
+			},
+			"response": []
+		},
+		{
+			"name": "apply promo code",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 401\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(401);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required Content-Type header\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message field is present in the response\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message field is a non-empty string\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify that the response body is in valid JSON format\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImU1N2QxY2FiZmQyOGU2NmI2N2VmZDIzNzg4ODY5ZjkzYzJiOGUyODI1ODFiMzEwMTg2MGNiZjdlZTdhYmM5ZjU2YTM5NTVjMWMzNzBmMjViIn0.eyJhdWQiOiI5IiwianRpIjoiZTU3ZDFjYWJmZDI4ZTY2YjY3ZWZkMjM3ODg4NjlmOTNjMmI4ZTI4MjU4MWIzMTAxODYwY2JmN2VlN2FiYzlmNTZhMzk1NWMxYzM3MGYyNWIiLCJpYXQiOjE2NjQyODI1OTYsIm5iZiI6MTY2NDI4MjU5NiwiZXhwIjoxNjk1ODE4NTk2LCJzdWIiOiI4NDA0Iiwic2NvcGVzIjpbXX0.LvyMRopuFTueT1ZA36iXYeYmcVOWL-39opNeP_oyscVrbdxY1t8MJ67hufZSz6VICRt3XrNNdWs44drsOlAVhsrd2-Ew-3ZwuC5D9xHGAs_KZpnDVOQ-NKH4PfORgtoA2y9xnxbKvd-dgt7l7RFRQMe98SVc4QTurFQQjMivKrV6_WCkWX_fWDVAJuheCzLDJ4ivZMRRjfYvuM12sWxQVj6BeLgCZvZY4aDiw6LE0zT33gVH2v38GLtInG2bqCy4NNJ9xUwMT03NsLrgtlH9TciX4mjmetyvlFllrzJo0o9ZnfJRvH2Rb--G62cpl2SGuqcwY6B651GTCOOv2OsjTLfqTqG3rdOjm6N8G4_Js272Zi5anesXouovlV3IBYk1pPPbqP19qonCeZiHSFoG7m1M2Ds_IX6sfua6zVbbOpBjUq_-bkFaJsYn-EbAOAz2eiNh8nKtaIbp4KmtOu_M4fG-1_tS652ZHeudNikUcpZJOgyS3Xeu9DRqhETaxLI_Oe0JHTSbHY2PdIYCqn-fY4k4zq0B0yn8qRJrMQjElCn-GyorKnQLDTnyWNUXSGoXZ9r7eAdXKPuMHU5-N4ho15-epj6YEQdPlap-OQkdKq7eDcRh1HWMkdNr40_BwH_269xjcVwU6716A6noId3vHbOvnGcN5Pb9gjddBBoy3yU"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "promo_code",
+							"value": "FREEC3",
+							"type": "text"
+						},
+						{
+							"key": "is_promo_code",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}cart/clear/promo/code",
+					"host": [
+						"{{freecia}}cart"
+					],
+					"path": [
+						"clear",
+						"promo",
+						"code"
+					]
+				},
+				"description": "verify voucher discount code"
+			},
+			"response": []
+		},
+		{
+			"name": "remove promo code",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"Response status code is 401\", function () {",
+							"  pm.expect(pm.response.code).to.equal(401);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required Content-Type header with value 'application/json'\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Message field is present in the response\", function () {",
+							"  const responseData = pm.response.json();",
+							"  pm.expect(responseData.message).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Message field is a non-empty string\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify that the 'freecia' cart is cleared after the request\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.message).to.exist;",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjU3ZTE0YWUzMzA2YWI4MWNkMWQyNWY0YTY2ODY2YjI3MWE3NWZmZWNhZDdmNzIzNTFkYjQ4MWU4NmU1OGQ0ZGIxMjliNDY5ZTY1NjVmZjgxIn0.eyJhdWQiOiI5IiwianRpIjoiNTdlMTRhZTMzMDZhYjgxY2QxZDI1ZjRhNjY4NjZiMjcxYTc1ZmZlY2FkN2Y3MjM1MWRiNDgxZTg2ZTU4ZDRkYjEyOWI0NjllNjU2NWZmODEiLCJpYXQiOjE2NTgxMTkxNTIsIm5iZiI6MTY1ODExOTE1MiwiZXhwIjoxNjg5NjU1MTUyLCJzdWIiOiI4NDAxIiwic2NvcGVzIjpbXX0.Rh96jCra7CjPh7bv7MkAxpC1A5C3XcbOJyYz6bA4dRcYaCCyKz8dChP9fwLpJBPjS6NN8-HInP7lekzlWCDKqDQTh5ieJpe3W_1tYxowOBkzTujhZLGXGkN47QV1DXfd7pPGHjdY9v2d_2akMmjQ-sSioTU9kZhlMiRPT0UBm-M_Po4BP9_7fkGU1odiA7SOq_5qgdV8GrEUSyTdjRtTl91omMwCePSIEwFbfboHjaBKsOPbSpv85jpP7FSOVrILcY3TpwTAhuF9vOv69RnCsRXX69uN0ip2fKb0SQVlK5q4VNSvyFIKWedozajRJmBkne-SpR-Ql6KD2qxpnmmB3tbU5DH8M0xeZ0fLOShdbsJvZhAjiPcIQCxWowSuo1lwqy8nhE-EEK6xVm7tBOsIHD3gSySc2BDqP3V1JqmznZwbwBag7uL3wwLm1Q2GV16fhFwg9fg6epIYtEJnY2pr8OQABdmt-uTqy66B0tEcCIJ7Wnneff1B7Vx-jykSjFRHjjBwoHBk1ECXekN43CtSzMSeCCI67hJenuazcFsa3vMdIjapJkgKjDF_O4C3FjNgwH9T8vYbnMiKkW8t_ntmL6H44ktJvid_hu8VU246sePNgGC_LCOkezCyZC8n-nzPrp69Eisk0iBtBiCNesA699U0n0xBNXiE-E67H2eX3cY"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{freecia}}cart/clear/promo/code",
+					"host": [
+						"{{freecia}}cart"
+					],
+					"path": [
+						"clear",
+						"promo",
+						"code"
+					]
+				},
+				"description": "verify voucher discount code"
+			},
+			"response": []
+		},
+		{
+			"name": "re-order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// const student = ['Ali', 'Ahsan', 'saad', 'rehman'];\r",
+							"// console.log(student.push('Ahmed'));\r",
+							"// console.log(student.sort());\r",
+							"\r",
+							"// // var lastName = student.pop();\r",
+							"// // console.log(lastName)\r",
+							"\r",
+							"// // var lastName =student.pop();\r",
+							"// // console.log(lastName)\r",
+							"\r",
+							"// let multiply = (a, b) => console.log(a*b);\r",
+							"// let addition = (a, b) => console.log(a+b);\r",
+							"\r",
+							"// function test(testName, callbackfuntion , num1 , num2) {\r",
+							"//     console.log(testName);\r",
+							"//     callbackfuntion(num1, num2);\r",
+							"// }\r",
+							"// test(\"this is addition test\", addition, 15, 25);\r",
+							"// test('thus is multiply test', multiply, 2, 10);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"// let subtract = (a, b) => console.log(a-b);\r",
+							"// let division = (a, b) => console.log(a/b);\r",
+							"\r",
+							"// function result(testingresult, callbackfuntion, sub, div) {\r",
+							"//         console.log(testingresult);\r",
+							"//         callbackfuntion(sub, div);\r",
+							"// }\r",
+							"// result('here are the result', subtract, 50, 10);\r",
+							"// result(\"here are the result\", division, 50, 2);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"let add = (a, b) => console.log(a+b);\r",
+							"let sub = (a, b) => console.log(a-b);\r",
+							"let div = (a, b) => console.log(a/b);\r",
+							"let multi = (a, b) => console.log(a*b);\r",
+							"\r",
+							"\r",
+							"function TestAll(testing,callback ,value1 ,value2 ,value3 ,value4){\r",
+							"    console.log(testing);\r",
+							"    callback(value1,value2,value3,value4);\r",
+							"}\r",
+							"TestAll(\"There is the final result\", add , 10, 90);\r",
+							"TestAll(\"There is the final result\", sub , 300, 200);\r",
+							"TestAll(\"There is the final result\", div , 1000, 10);\r",
+							"TestAll(\"There is the final result\", multi , 10, 10);\r",
+							"\r",
+							"pm.test(\"Response status code is 401\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(401);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required field 'message'\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.be.an('object');\r",
+							"  pm.expect(responseData.message).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message is a non-empty string\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"\r",
+							"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify that the request is an HTTP POST request\", function () {\r",
+							"    pm.expect(pm.request.method).to.equal(\"POST\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImI4YWZmOGU4MmMwODgwNDVkMTEyZTBjY2NhMDcxNDY5ZGRmYTFhZGVkNmJlMGU2NDcwNDhlNTEyOWNmYjg3NjA1ZWJlYjI1ODYxNGJkYjc5In0.eyJhdWQiOiI5IiwianRpIjoiYjhhZmY4ZTgyYzA4ODA0NWQxMTJlMGNjY2EwNzE0NjlkZGZhMWFkZWQ2YmUwZTY0NzA0OGU1MTI5Y2ZiODc2MDVlYmViMjU4NjE0YmRiNzkiLCJpYXQiOjE2NjM2NTQxMzUsIm5iZiI6MTY2MzY1NDEzNSwiZXhwIjoxNjk1MTkwMTM1LCJzdWIiOiI4NDA0Iiwic2NvcGVzIjpbXX0.s4hUQWPn8WWvs52KVlugGmWd_6HDfRmg5pZSJyP7pZfKdzla_1YsmbQV9-TswruNjYDZuiYY-KUc0tQXRy6vddCA32mpllF79PMmBLkWUI40v6rbkwpKx9p9MId1fMyT1VtTkKqWDRfHcKxEKxS1LcZp72a_Rz-l3-h3k2inMRd_orZLZ-ekfnPPJWI_R9oRkDB6zngmW_eDpd3tBLOJGUKwO6lP9DgNps0BZPQoO1BCQCrw5wPPpHCL1PBQiNz6Kft4bXS3jTV6EMOiZSfTirHD2j8IYaZM99esN8r9J0nu4p_FSfyLk94ei85zAVdD2YsWyzbT4Xh1M8QTRA7VcfDIeSN3x7Tlj-lB615Cx0FsGoyC_ummi8C2nggjKRns25g-iskW8yBZUkoVH1BkkqBeJh5ux5oqZNQQqCo3VhTm2tLxfyIzLq8aDzhFzvGSrxpa3QquQvE7tnLMKcCcFnDA-fVJAY0OlDiNFALeJNGMVdj3b9QNj_fXx88-4QL1UdX7UsH8jJUP4lYOCMjfa6neVIUTuD_KsdU4z3VR6DgxMBz1AM7ADI4g7BQ_eN9QGTDBW42Dor9e0iJyrrkejaeYmaHsqZ2Uvr2cvHwEBjxtGNM9eKxJYgG9NbiwaibvE3s0oTvAQR1eQGgLp0utgTAZYqNTDJJ7Pr37t0JPFTU"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "order_id",
+							"value": "21",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}user/re-order",
+					"host": [
+						"{{freecia}}user"
+					],
+					"path": [
+						"re-order"
+					]
+				},
+				"description": "remove cart products"
+			},
+			"response": []
+		},
+		{
+			"name": "popular products",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{freecia}}popular/products",
+					"host": [
+						"{{freecia}}popular"
+					],
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Most Popular Restaurants"
+			},
+			"response": []
+		},
+		{
+			"name": "get deal products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.include.all.keys('current_page', 'data', 'first_page_url', 'last_page', 'last_page_url', 'links', 'per_page', 'prev_page_url', 'to', 'total');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Product deals array is present and contains expected number of elements\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.have.property('data');\r",
+							"    pm.expect(responseData.data).to.have.property('product_deals').that.is.an('array').and.to.have.lengthOf.at.least(1);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "isRetailer",
+						"value": "false",
+						"description": "this should be true and false",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{freecia}}deal/products",
+					"host": [
+						"{{freecia}}deal"
+					],
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "q",
+							"value": "combo",
+							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Most Popular Restaurants"
+			},
+			"response": []
+		},
+		{
+			"name": "get cart details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 401\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(401);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required field 'message'\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.message).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message is a non-empty string\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content type is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify that the message field is of type string\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData.message).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImU1N2QxY2FiZmQyOGU2NmI2N2VmZDIzNzg4ODY5ZjkzYzJiOGUyODI1ODFiMzEwMTg2MGNiZjdlZTdhYmM5ZjU2YTM5NTVjMWMzNzBmMjViIn0.eyJhdWQiOiI5IiwianRpIjoiZTU3ZDFjYWJmZDI4ZTY2YjY3ZWZkMjM3ODg4NjlmOTNjMmI4ZTI4MjU4MWIzMTAxODYwY2JmN2VlN2FiYzlmNTZhMzk1NWMxYzM3MGYyNWIiLCJpYXQiOjE2NjQyODI1OTYsIm5iZiI6MTY2NDI4MjU5NiwiZXhwIjoxNjk1ODE4NTk2LCJzdWIiOiI4NDA0Iiwic2NvcGVzIjpbXX0.LvyMRopuFTueT1ZA36iXYeYmcVOWL-39opNeP_oyscVrbdxY1t8MJ67hufZSz6VICRt3XrNNdWs44drsOlAVhsrd2-Ew-3ZwuC5D9xHGAs_KZpnDVOQ-NKH4PfORgtoA2y9xnxbKvd-dgt7l7RFRQMe98SVc4QTurFQQjMivKrV6_WCkWX_fWDVAJuheCzLDJ4ivZMRRjfYvuM12sWxQVj6BeLgCZvZY4aDiw6LE0zT33gVH2v38GLtInG2bqCy4NNJ9xUwMT03NsLrgtlH9TciX4mjmetyvlFllrzJo0o9ZnfJRvH2Rb--G62cpl2SGuqcwY6B651GTCOOv2OsjTLfqTqG3rdOjm6N8G4_Js272Zi5anesXouovlV3IBYk1pPPbqP19qonCeZiHSFoG7m1M2Ds_IX6sfua6zVbbOpBjUq_-bkFaJsYn-EbAOAz2eiNh8nKtaIbp4KmtOu_M4fG-1_tS652ZHeudNikUcpZJOgyS3Xeu9DRqhETaxLI_Oe0JHTSbHY2PdIYCqn-fY4k4zq0B0yn8qRJrMQjElCn-GyorKnQLDTnyWNUXSGoXZ9r7eAdXKPuMHU5-N4ho15-epj6YEQdPlap-OQkdKq7eDcRh1HWMkdNr40_BwH_269xjcVwU6716A6noId3vHbOvnGcN5Pb9gjddBBoy3yU",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{freecia}}cart/detail",
+					"host": [
+						"{{freecia}}cart"
+					],
+					"path": [
+						"detail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "role switch",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 401\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(401);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required field - message\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message is a non-empty string\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message field contains a meaningful error message\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.exist.and.to.be.a('string');\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjlmYTZhZTRkYzc4YTY4Y2Y2ZThjMDFlNjcxMmZkNThiNGEwOGMxODE5YTMyNmMzMzE4ODdlNDNiNTJmNzVmYTI4ZDhhYTIwZTRlMDEzMGJlIn0.eyJhdWQiOiI5IiwianRpIjoiOWZhNmFlNGRjNzhhNjhjZjZlOGMwMWU2NzEyZmQ1OGI0YTA4YzE4MTlhMzI2YzMzMTg4N2U0M2I1MmY3NWZhMjhkOGFhMjBlNGUwMTMwYmUiLCJpYXQiOjE2NjU0NzY4NTYsIm5iZiI6MTY2NTQ3Njg1NiwiZXhwIjoxNjk3MDEyODU2LCJzdWIiOiI4NDA4Iiwic2NvcGVzIjpbXX0.xgv4pCeviGN5KPW_kMF5Acfc9q-QtR0ZBbRvFSrB-s4s1k2r_iYGuv1wGqaQ4K4glhMoH54ZBIParMMnjD8icdSVHqeh5g0xZO0hM00jy4iwYwpltSqUw1ej0iLFtIVzyBEgd3_xoPg3mzuPzsQUMyajmhixvIwnizzibIGEwQXA9mhaxr5TS7LskPaiU6qZ1L6gOWDxwBbmcSgedmCBGvCDP5WHW2HeBfGrJ4GXXHl3v_feB_y1Zu-4xkoLHjQ6gW0ipu5zM0pizXMLMHiPo8t2JPHZLdxsippXCaXntdg_QyLhIcDtKp_dsClaWtZpGIAKwBosAANI1Qi59ZGA6lgP9immkCTkOrDnYsafL2L2-UsTKZqZjlcjzoRD8O8kmAj9OApLxCaSOeiyL74HUEyXKYkNbooXgXsXtJELXdhh5KuGToHg3f4L8euID0CFxAOnTTjHNkPSB2fGVKj_vhfvG3oNQiyGnbwB3bnjbWNKUB9ssQvmcGjogg72XML5eQ2GEhrcwt2kawdb2oZohSRx-c310KmROs-m4O_d-sO0LJK1BfTgTPmfOAzVOYqJ_V52JDYtWmRyj0c_WfSObDeBCSm946_3QxYj-memNlP_R087xILMesD1HAdlFIi_eEOBkSScwaeFcF8JxG2gzEpG_JksKz85asrS4Hp8hqc",
+						"type": "text"
+					},
+					{
+						"key": "isRetailer",
+						"value": "true",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "is_retailer",
+							"value": "0",
+							"description": "this should be 1 and 0, if is_retailer = 1 then then user is switched to retailer mode and if is_retailer = 0 then the user is switched to user mode.",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}role/switch",
+					"host": [
+						"{{freecia}}role"
+					],
+					"path": [
+						"switch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get professionals",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 404\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(404);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.include.all.keys('message', 'exception', 'file', 'line', 'trace');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Trace array is present and contains the expected number of elements\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.trace).to.be.an('array');\r",
+							"    pm.expect(responseData.trace).to.have.lengthOf(1);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", function () {\r",
+							"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message is a non-empty string\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{freecia}}http://freecia-copy.local/api/customer/professionals",
+					"protocol": "{{freecia}}http",
+					"host": [
+						"freecia-copy",
+						"local"
+					],
+					"path": [
+						"api",
+						"customer",
+						"professionals"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "Hair",
+							"description": "Search on the basis of speciality field",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Booked Professional",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 404\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(404);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.exist;\r",
+							"    pm.expect(responseData.exception).to.exist;\r",
+							"    pm.expect(responseData.file).to.exist;\r",
+							"    pm.expect(responseData.line).to.exist;\r",
+							"    pm.expect(responseData.trace).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message is a non-empty string\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify that the 'trace' array is present and contains the expected number of elements\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.trace).to.be.an('array');\r",
+							"    pm.expect(responseData.trace).to.have.lengthOf.at.least(1, \"Trace array should contain at least one element\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"File and line are non-negative integers\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"\r",
+							"  pm.expect(responseData.file).to.be.a('number').and.to.be.at.least(0);\r",
+							"  pm.expect(responseData.line).to.be.a('number').and.to.be.at.least(0);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImQ5ZDI0YzllZTRlMTUxZjdiMTg0MTQ3OWU2MDViMWM4OTE3OGQzYmNmYWI1MzQzYjY3MmEyY2JlYzI1NjExMmIyZTJiMzE0N2RjMTdjNjljIn0.eyJhdWQiOiI5IiwianRpIjoiZDlkMjRjOWVlNGUxNTFmN2IxODQxNDc5ZTYwNWIxYzg5MTc4ZDNiY2ZhYjUzNDNiNjcyYTJjYmVjMjU2MTEyYjJlMmIzMTQ3ZGMxN2M2OWMiLCJpYXQiOjE2NjQwMjg0MTAsIm5iZiI6MTY2NDAyODQxMCwiZXhwIjoxNjk1NTY0NDEwLCJzdWIiOiI4NDA0Iiwic2NvcGVzIjpbXX0.Hf5AB2l5ow-b-raQViOZBF_-2OTe4aLnSI2IeErEb60XOzJlaWsjFXYlfY_wxtkpxa5-h7omfP0egOBnFNjKxs5RqVr4c6EifvIsIPOAY8fTn14D_93tPJCky8G1c3om1EcRVIHp0sjwfItpFJCC3wU8tpGA8pgT8C58fTyPJJiTz0tIW96O069dClLvrNBkSLva2ji93AQW-nuwHUeQAmdf1z3gKo-QMqxLrrfjEQvbWGZmdzSRpcm2eNosNFIfnwcUCxC4BoJHaSC-UmIEb7EHis7-UeVdVUlE_pLGG9JpTamK_2-HIQ9EIO6GSKJozJMhE0WKyU0onpDC9NUKFoSfA2Aew5pvQiyW9Jl8ASYNmJDBWm-6683Dtmtzdnd5GnDAoNn2GsDXz5xr6msZrlhkJTSNYBlSDBWSihwfeEmX7JzKDlWfiWhZPhIAit4jb-VHbrQ32kItc9TgKYq1pWdgqCf365thiqYqUuOD-MsF0TwBNmDe_hgnwstAE1vKiiZ29pjWMx2-z5ypnkHcrnNGEziMJ9idK0_lVgeRrRp6zT2GZjxUze9OFaBIiV8ctsJG-F2DSf1XHmVpR0HykzX2WO0FYxRxz-GMOxL1JaH2affdEJ-2BrKcXMxSgbdcoxrwkBUGGGbHlWhfuwFJnaNXfDw74wtvhvOYmpiUMak"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "appointment_time_id",
+							"value": "32",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}http://freecia-copy.local/api/customer/appointment/booked",
+					"protocol": "{{freecia}}http",
+					"host": [
+						"freecia-copy",
+						"local"
+					],
+					"path": [
+						"api",
+						"customer",
+						"appointment",
+						"booked"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				},
+				"description": "remove cart products"
+			},
+			"response": []
+		},
+		{
+			"name": "appointment feedback",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 404\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(404);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.exist;\r",
+							"    pm.expect(responseData.exception).to.exist;\r",
+							"    pm.expect(responseData.file).to.exist;\r",
+							"    pm.expect(responseData.line).to.exist;\r",
+							"    pm.expect(responseData.trace).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message is a non-empty string\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"File and trace contain valid file paths\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.file).to.be.a('string').and.to.match(/\\/\\w+/);\r",
+							"    pm.expect(responseData.trace).to.be.an('array');\r",
+							"    responseData.trace.forEach(trace => {\r",
+							"        pm.expect(trace.file).to.be.a('string').and.to.match(/\\/\\w+/);\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Line number is a non-negative integer\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.line).to.be.a('number');\r",
+							"    pm.expect(responseData.line).to.be.at.least(0, \"Line number should be a non-negative integer\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImQ5ZDI0YzllZTRlMTUxZjdiMTg0MTQ3OWU2MDViMWM4OTE3OGQzYmNmYWI1MzQzYjY3MmEyY2JlYzI1NjExMmIyZTJiMzE0N2RjMTdjNjljIn0.eyJhdWQiOiI5IiwianRpIjoiZDlkMjRjOWVlNGUxNTFmN2IxODQxNDc5ZTYwNWIxYzg5MTc4ZDNiY2ZhYjUzNDNiNjcyYTJjYmVjMjU2MTEyYjJlMmIzMTQ3ZGMxN2M2OWMiLCJpYXQiOjE2NjQwMjg0MTAsIm5iZiI6MTY2NDAyODQxMCwiZXhwIjoxNjk1NTY0NDEwLCJzdWIiOiI4NDA0Iiwic2NvcGVzIjpbXX0.Hf5AB2l5ow-b-raQViOZBF_-2OTe4aLnSI2IeErEb60XOzJlaWsjFXYlfY_wxtkpxa5-h7omfP0egOBnFNjKxs5RqVr4c6EifvIsIPOAY8fTn14D_93tPJCky8G1c3om1EcRVIHp0sjwfItpFJCC3wU8tpGA8pgT8C58fTyPJJiTz0tIW96O069dClLvrNBkSLva2ji93AQW-nuwHUeQAmdf1z3gKo-QMqxLrrfjEQvbWGZmdzSRpcm2eNosNFIfnwcUCxC4BoJHaSC-UmIEb7EHis7-UeVdVUlE_pLGG9JpTamK_2-HIQ9EIO6GSKJozJMhE0WKyU0onpDC9NUKFoSfA2Aew5pvQiyW9Jl8ASYNmJDBWm-6683Dtmtzdnd5GnDAoNn2GsDXz5xr6msZrlhkJTSNYBlSDBWSihwfeEmX7JzKDlWfiWhZPhIAit4jb-VHbrQ32kItc9TgKYq1pWdgqCf365thiqYqUuOD-MsF0TwBNmDe_hgnwstAE1vKiiZ29pjWMx2-z5ypnkHcrnNGEziMJ9idK0_lVgeRrRp6zT2GZjxUze9OFaBIiV8ctsJG-F2DSf1XHmVpR0HykzX2WO0FYxRxz-GMOxL1JaH2affdEJ-2BrKcXMxSgbdcoxrwkBUGGGbHlWhfuwFJnaNXfDw74wtvhvOYmpiUMak"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "appointment_order_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "feedback",
+							"value": "Good",
+							"type": "text"
+						},
+						{
+							"key": "rating",
+							"value": "4",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}http://freecia-copy.local/api/customer/appointment-feedback",
+					"protocol": "{{freecia}}http",
+					"host": [
+						"freecia-copy",
+						"local"
+					],
+					"path": [
+						"api",
+						"customer",
+						"appointment-feedback"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				},
+				"description": "remove cart products"
+			},
+			"response": []
+		},
+		{
+			"name": "get professional feedback",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 404\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(404);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.have.property('message');\r",
+							"    pm.expect(responseData).to.have.property('exception');\r",
+							"    pm.expect(responseData).to.have.property('file');\r",
+							"    pm.expect(responseData).to.have.property('line');\r",
+							"    pm.expect(responseData).to.have.property('trace');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message is a non-empty string\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Trace array is present and contains at least one element\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.be.an('object');\r",
+							"  pm.expect(responseData.trace).to.exist.and.to.be.an('array').that.is.not.empty;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"File and line in the trace are non-negative integers\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.trace).to.be.an('array');\r",
+							"    responseData.trace.forEach(function(traceItem) {\r",
+							"        pm.expect(traceItem.file).to.be.a('string');\r",
+							"        pm.expect(traceItem.line).to.be.a('number').to.be.at.least(0);\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{freecia}}http://freecia-copy.local/api/customer/appointment/feedback?professional_id=8584",
+					"protocol": "{{freecia}}http",
+					"host": [
+						"freecia-copy",
+						"local"
+					],
+					"path": [
+						"api",
+						"customer",
+						"appointment",
+						"feedback"
+					],
+					"query": [
+						{
+							"key": "professional_id",
+							"value": "8584"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Store FCM Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 401\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(401);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required Content-Type header\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message field is present in the response\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData.message).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message is a non-empty string\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message is a meaningful error message\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.message).to.exist.and.to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjgwMWQ4Zjc1YWIxM2ZlNzM0ODUxNDZlMTVkYjQ4MzdlZWNkZWE4MTBiZWZlMDg4ODlmN2E5NmZhYzc0ZDZiMTAwOTlkNzM5OGE4MzBkZjI3In0.eyJhdWQiOiI3IiwianRpIjoiODAxZDhmNzVhYjEzZmU3MzQ4NTE0NmUxNWRiNDgzN2VlY2RlYTgxMGJlZmUwODg4OWY3YTk2ZmFjNzRkNmIxMDA5OWQ3Mzk4YTgzMGRmMjciLCJpYXQiOjE2NjE0OTM0NDQsIm5iZiI6MTY2MTQ5MzQ0NCwiZXhwIjoxNjkzMDI5NDQ0LCJzdWIiOiI0NzM1Iiwic2NvcGVzIjpbXX0.eEmZxLl1D64fM4nvjnlEWvZFw5lWg647G2M6DYZOZlLZlyS3px2U9K3CZIvs-ZXZVzaOgs5vL2CcU04NIQLtyksjVZZujohAk0sRuaM3dZaR8vZU942bzmtoZ-DCr2wCKI2O5R3A_-1K0sSplGTypT-WVt7jfZYieFqHozKhvfB3Afh7czkdKG6Mh1roGMRsnBbilun5r1nhZ6HAhLUQTR_bXytLCW9Qe2GsXnIQJyPqu_mnBy_mfq3aowup1o3UOmAvbYeVPYnx8wkm3kq9xO0U0--g1ii1-emfNo3sJclYBgD4MDVZudJCtJnSG-2k_w8q1Jf3ZBBd0yc-93ZuZbNP0suJpvm-X6edizht5MEhqpdagZizMYgiQzEAkK0gEcwpKLdm6IqPl9wW0GR4h1PXIVXOs4QpsS0ElREKWL_ajHHzpvZVBi8DAUo8mfTgSbPxpbcXXqWQdMJq3P5I8usRR7PIx6aKeKt3OXbKoovLmq8HMoGS9RHbm2rjFC-XDGgLSWGFI8toNOPBPNYgZzJfEuyYnTwgdUciSZqcuVeeNwVy2Hl54L0rzq5L7fVYJyQftoPOfgs2uG32cknC3g2rc6uFGFUYm8Lv7jl-zLbRDBaNW8DzGaqi2y6Mayv1faokY6Sbv5tm2NNQxv3zMfY29nSqBTyA3SweS6USawk"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "token",
+							"value": "etmdcyteRUKNvCU7fTahFv:APA91bFRlwLjXp4ggwMa6KVO2qgk1iX-Zzjsjo5LYEIg-D3LxmsOWHHZQnd0i-aohgLfJM_TGhE1BOsBny8FTVFk_aYDD2qFQg5hFc_2VywvUaDgOlLRg5KUDZY6f34i7mbEnbVw_T75",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{freecia}}store/fcm/token",
+					"host": [
+						"{{freecia}}store"
+					],
+					"path": [
+						"fcm",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "TOKEN",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjUyZDc2NTU1MTY5Mzk2ZDA0ZGU5MzdhMTkwNjRkZTE4MTJjYWJkODE0MjY1M2YxOTY2MTQ2N2Y0NjI3YjQ3MWFkYjYzYjQ3YjNjOTc1MGFiIn0.eyJhdWQiOiIxIiwianRpIjoiNTJkNzY1NTUxNjkzOTZkMDRkZTkzN2ExOTA2NGRlMTgxMmNhYmQ4MTQyNjUzZjE5NjYxNDY3ZjQ2MjdiNDcxYWRiNjNiNDdiM2M5NzUwYWIiLCJpYXQiOjE2ODI0ODgwNTksIm5iZiI6MTY4MjQ4ODA1OSwiZXhwIjoxNzE0MTEwNDU5LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.mKXXt95AW1HV8pbnj-e3aN3zIcJdl3mbvCtcIMiAJVPwgGG0dhzmfaKF2aLROuGyQz24-RT0qYvm8EMbcKawB-TqlpVwUkVDMXoobU0HcXGUQGNwxW5pQv76QMzs8D8zsye74woTVSFm0C351DA602gO52bNoF4IcCC4vUZD7MejheKggm67eeNw8qf9C-99ESwSFhXIVrcx1OX2UFlrrtIaedT4ptg42Pn_CICA0ZoV5fg5CTkYEQZvNUwqMVzBBItw3W2Tfvy1CChm7hN_FRekRC8Hxp2y1puTXFLutaHjcir1q2t1oS_KXeKafWqdb9VjSlMwjHTgHpc4bkZ54ctrTSwDKJhMB24ntV4qZPa56Pi5hah_8c7qFlR_wuPQ3zhs2s7SPJuo47Wet8-qnb7VxBvI8xmGnr2DUzl71sLM2D2xZmrfmPE1XSzZSne5glHaAc1v-R0ygDtZogs8EPgBV-arUJuL7e9NDkjgB4_1w1dGlkK27XU57PMBmOOI40MOMeyq5PUz93tmBqo0L4mhHhyniByo_lv4LMfz02kKkTHQBOo5DbkJIX5z4tGkHG9x4jc5CvIgkI83jOdxKsQvPDpgpW10VGmLtLSHMwnzV3QMzIzP1Ece8ajZgg0ZjjyWOoVdlH45Mjz9peokP89j5vk-dYcsamdlk26yoIM"
+		},
+		{
+			"key": "URL",
+			"value": "https://freecia.online/api/customer/",
+			"type": "string"
+		}
+	]
+}
